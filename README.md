@@ -1,1 +1,1 @@
-# double-pendulum
+# Double Pendulum "Simulation"
