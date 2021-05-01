@@ -1,0 +1,4 @@
+C:\Users\vince\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_CXX_FLAGS=-pedantic -pedantic-errors -Wall -Weffc++ -Wextra -Wsign-conversion" -G "CodeBlocks - MinGW Makefiles" C:\Users\vince\Documents\double-pendulum
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Users/vince/Documents/double-pendulum/cmake-build-debug-mingw
