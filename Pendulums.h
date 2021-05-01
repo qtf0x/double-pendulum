@@ -16,7 +16,10 @@ public:
     // Constructors
 
     Pendulums();
-    Pendulums( Pendulum& pend1, Pendulum& pend2 );
+    Pendulums( const double xStart1, const double yStart1,
+               const double angle1, const double armLen1,
+               const double bobMass1, const double angle2,
+               const double armLen2, const double bobMass2 );
 
     // Getters + Setters
 
@@ -25,12 +28,16 @@ public:
 
     // Helper functions
 
-    void updateValues();
+    void updateEverything();
 
 private:
     static const double G;
     Pendulum _pend1;
     Pendulum _pend2;
+    double _xStart1;
+    double _yStart1;
+    double _xStart2;
+    double _yStart2;
 };
 
 #endif //DOUBLE_PENDULUM_PENDULUMS_H

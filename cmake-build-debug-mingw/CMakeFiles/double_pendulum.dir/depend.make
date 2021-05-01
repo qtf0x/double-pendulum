@@ -4,5 +4,11 @@
 CMakeFiles/double_pendulum.dir/Pendulum.cpp.obj: ../Pendulum.cpp
 CMakeFiles/double_pendulum.dir/Pendulum.cpp.obj: ../Pendulum.h
 
+CMakeFiles/double_pendulum.dir/Pendulums.cpp.obj: ../Pendulum.h
+CMakeFiles/double_pendulum.dir/Pendulums.cpp.obj: ../Pendulums.cpp
+CMakeFiles/double_pendulum.dir/Pendulums.cpp.obj: ../Pendulums.h
+
+CMakeFiles/double_pendulum.dir/main.cpp.obj: ../Pendulum.h
+CMakeFiles/double_pendulum.dir/main.cpp.obj: ../Pendulums.h
 CMakeFiles/double_pendulum.dir/main.cpp.obj: ../main.cpp
 

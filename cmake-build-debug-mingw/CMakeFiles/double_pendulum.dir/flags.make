@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = @CMakeFiles/double_pendulum.dir/includes_CXX.rsp
 
-CXX_FLAGS = -pedantic -pedantic-errors -Wall -Weffc++ -Wextra -Wsign-conversion -g -std=gnu++2a
+CXX_FLAGS = -pedantic -pedantic-errors -Wall -Wextra -Wsign-conversion -g -std=gnu++2a
 

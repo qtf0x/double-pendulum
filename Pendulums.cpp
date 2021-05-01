@@ -8,13 +8,23 @@
 
 #include "Pendulums.h"
 
-const double Pendulums::G = 6.67430E-11;
+#include <cmath>
 
-Pendulums::Pendulums() = default;
+const double Pendulums::G = 0.5;
 
-Pendulums::Pendulums( Pendulum& pend1, Pendulum& pend2 ) {
-    _pend1 = pend1;
-    _pend2 = pend2;
+Pendulums::Pendulums() {
+    // FIXME
+}
+
+Pendulums::Pendulums( const double xStart1, const double yStart1,
+                      const double angle1, const double armLen1,
+                      const double bobMass1, const double angle2,
+                      const double armLen2, const double bobMass2 ) {
+    _pend1 = Pendulum( angle1, armLen1, bobMass1 );
+    _pend2 = Pendulum( angle2, armLen2, bobMass2 );
+    _xStart1 = xStart1;
+    _yStart1 = yStart1;
+    updateEverything();
 }
 
 Pendulum Pendulums::getpend1() const {
@@ -25,6 +35,31 @@ Pendulum Pendulums::getpend2() const {
     return _pend2;
 }
 
-void Pendulums::updateValues() {
-    // FIXME
+void Pendulums::updateEverything() {
+    double angAcc1( 0.0 ), angAcc2( 0.0 );
+    double m1( _pend1.getbobMass() ), m2( _pend2.getbobMass() );
+    double l1( _pend1.getarmLen() ), l2( _pend2.getarmLen() );
+    double a1( _pend1.getangleRads() ), a2( _pend2.getangleRads() );
+    double v1( _pend1.getangVel() ), v2( _pend2.getangVel() );
+
+    angAcc1 = ( ( -G * ( 2 * m1 + m2 ) * sin( a1 ) ) - ( m2 * G * sin( a1 - 2 * a2 ) ) - ( 2 * sin( a1 - a2 ) * m2 * ( v2 * v2 * l2 + v1 * v1 * l1 * cos( a1 - a2 ) ) ) ) / ( l1 * ( 2 * m1 + m2 - m2 * cos( 2 * a1 - 2 * a2 ) ) );
+    angAcc2 = ( 2 * sin( a1 - a2 ) * ( v1 * v1 * l1 * ( m1 + m2 ) + G * ( m1 + m2 ) * cos( a1 ) + v2 * v2 * l2 * m2 * cos( a1 - a2 ) ) ) / ( l2 * ( 2 * m1 + m2 - m2 * cos( 2 * a1 - 2 * a2 ) ) );
+
+    _pend1.setangAcc( angAcc1 );
+    _pend2.setangAcc( angAcc2 );
+
+    _pend1.setxPos( _xStart1 + ( l1 * sin( a1 ) ) );
+    _pend1.setyPos( _yStart1 + ( l1 * cos( a1 ) ) );
+
+    _xStart2 = _pend1.getxPos();
+    _yStart2 = _pend1.getyPos();
+
+    _pend2.setxPos( _xStart2 + ( l2 * sin( a2 ) ) );
+    _pend2.setyPos( _yStart2 + ( l2 * cos( a2 ) ) );
+
+    _pend1.setarmPos( _xStart1, _yStart1 );
+    _pend2.setarmPos( _xStart2, _yStart2 );
+
+    _pend1.updateValues();
+    _pend2.updateValues();
 }

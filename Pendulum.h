@@ -17,17 +17,31 @@ public:
     // Constructors
 
     Pendulum();
-    Pendulum( const double xPos, const double yPos, const double armLen,
+    Pendulum( const double angleRads, const double armLen,
               const double bobMass );
 
     // Getters + Setters
 
-    RectangleShape getarm() const;
+    VertexArray getarm() const;
     CircleShape getbob() const;
+    double getxPos() const;
+    double getyPos() const;
+    double getangleRads() const;
+    double getangVel() const;
+    double getarmLen() const;
+    double getbobMass() const;
+
+    void setxPos( const double xPos );
+    void setyPos( const double yPos );
     void setangAcc( const double angAcc );
+    void setarmPos( const double armPosx, const double armPosy );
+
+    // Helper functions
+
+    void updateValues();
 
 private:
-    RectangleShape _arm;
+    VertexArray _arm;
     CircleShape _bob;
     double _xPos;
     double _yPos;

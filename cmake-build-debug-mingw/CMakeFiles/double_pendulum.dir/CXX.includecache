@@ -6,17 +6,17 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/vince/Documents/double-pendulum/Pendulum.cpp
-Pendulum.h
 C:/Users/vince/Documents/double-pendulum/Pendulum.h
-
-C:/Users/vince/Documents/double-pendulum/Pendulum.h
-
-C:/Users/vince/Documents/double-pendulum/main.cpp
 SFML/Graphics.hpp
 -
-fstream
+
+C:/Users/vince/Documents/double-pendulum/Pendulums.cpp
+Pendulums.h
+C:/Users/vince/Documents/double-pendulum/Pendulums.h
+cmath
 -
-iostream
--
+
+C:/Users/vince/Documents/double-pendulum/Pendulums.h
+Pendulum.h
+C:/Users/vince/Documents/double-pendulum/Pendulum.h
 
