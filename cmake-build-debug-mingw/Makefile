@@ -141,6 +141,60 @@ double_pendulum/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\double_pendulum.dir\build.make CMakeFiles/double_pendulum.dir/build
 .PHONY : double_pendulum/fast
 
+Pendulum.obj: Pendulum.cpp.obj
+
+.PHONY : Pendulum.obj
+
+# target to build an object file
+Pendulum.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\double_pendulum.dir\build.make CMakeFiles/double_pendulum.dir/Pendulum.cpp.obj
+.PHONY : Pendulum.cpp.obj
+
+Pendulum.i: Pendulum.cpp.i
+
+.PHONY : Pendulum.i
+
+# target to preprocess a source file
+Pendulum.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\double_pendulum.dir\build.make CMakeFiles/double_pendulum.dir/Pendulum.cpp.i
+.PHONY : Pendulum.cpp.i
+
+Pendulum.s: Pendulum.cpp.s
+
+.PHONY : Pendulum.s
+
+# target to generate assembly for a file
+Pendulum.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\double_pendulum.dir\build.make CMakeFiles/double_pendulum.dir/Pendulum.cpp.s
+.PHONY : Pendulum.cpp.s
+
+Pendulums.obj: Pendulums.cpp.obj
+
+.PHONY : Pendulums.obj
+
+# target to build an object file
+Pendulums.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\double_pendulum.dir\build.make CMakeFiles/double_pendulum.dir/Pendulums.cpp.obj
+.PHONY : Pendulums.cpp.obj
+
+Pendulums.i: Pendulums.cpp.i
+
+.PHONY : Pendulums.i
+
+# target to preprocess a source file
+Pendulums.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\double_pendulum.dir\build.make CMakeFiles/double_pendulum.dir/Pendulums.cpp.i
+.PHONY : Pendulums.cpp.i
+
+Pendulums.s: Pendulums.cpp.s
+
+.PHONY : Pendulums.s
+
+# target to generate assembly for a file
+Pendulums.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\double_pendulum.dir\build.make CMakeFiles/double_pendulum.dir/Pendulums.cpp.s
+.PHONY : Pendulums.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -177,6 +231,12 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... double_pendulum
+	@echo ... Pendulum.obj
+	@echo ... Pendulum.i
+	@echo ... Pendulum.s
+	@echo ... Pendulums.obj
+	@echo ... Pendulums.i
+	@echo ... Pendulums.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

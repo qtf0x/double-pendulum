@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/vince/Documents/double-pendulum/Pendulum.cpp
+Pendulum.h
+C:/Users/vince/Documents/double-pendulum/Pendulum.h
+
+C:/Users/vince/Documents/double-pendulum/Pendulum.h
+
+C:/Users/vince/Documents/double-pendulum/main.cpp
+SFML/Graphics.hpp
+-
+fstream
+-
+iostream
+-
+

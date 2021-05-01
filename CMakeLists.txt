@@ -9,7 +9,7 @@ include_directories("C:/Program Files/mingw-w64
 include_directories("C:/Program Files/mingw-w64
                      /x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/include")
 
-add_executable(double_pendulum main.cpp)
+add_executable(double_pendulum main.cpp Pendulum.cpp Pendulum.h Pendulums.cpp Pendulums.h)
 
 target_link_directories(double_pendulum PUBLIC "C:/ProgramFiles/mingw-w64
                         /x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64

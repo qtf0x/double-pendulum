@@ -92,12 +92,12 @@ clean: CMakeFiles/double_pendulum.dir/clean
 CMakeFiles/double_pendulum.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\double_pendulum.dir\build.make CMakeFiles/double_pendulum.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\double_pendulum.dir\build.make CMakeFiles/double_pendulum.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\vince\Documents\double-pendulum\cmake-build-debug-mingw\CMakeFiles --progress-num=1,2 "Built target double_pendulum"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\vince\Documents\double-pendulum\cmake-build-debug-mingw\CMakeFiles --progress-num=1,2,3,4 "Built target double_pendulum"
 .PHONY : CMakeFiles/double_pendulum.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/double_pendulum.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\vince\Documents\double-pendulum\cmake-build-debug-mingw\CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\vince\Documents\double-pendulum\cmake-build-debug-mingw\CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/double_pendulum.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\vince\Documents\double-pendulum\cmake-build-debug-mingw\CMakeFiles 0
 .PHONY : CMakeFiles/double_pendulum.dir/rule

@@ -4,6 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "C:/Users/vince/Documents/double-pendulum/Pendulum.cpp" "C:/Users/vince/Documents/double-pendulum/cmake-build-debug-mingw/CMakeFiles/double_pendulum.dir/Pendulum.cpp.obj"
+  "C:/Users/vince/Documents/double-pendulum/Pendulums.cpp" "C:/Users/vince/Documents/double-pendulum/cmake-build-debug-mingw/CMakeFiles/double_pendulum.dir/Pendulums.cpp.obj"
   "C:/Users/vince/Documents/double-pendulum/main.cpp" "C:/Users/vince/Documents/double-pendulum/cmake-build-debug-mingw/CMakeFiles/double_pendulum.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

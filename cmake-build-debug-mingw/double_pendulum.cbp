@@ -90,6 +90,18 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/vince/Documents/double-pendulum/Pendulum.cpp">
+			<Option target="double_pendulum"/>
+		</Unit>
+		<Unit filename="C:/Users/vince/Documents/double-pendulum/Pendulum.h">
+			<Option target="double_pendulum"/>
+		</Unit>
+		<Unit filename="C:/Users/vince/Documents/double-pendulum/Pendulums.cpp">
+			<Option target="double_pendulum"/>
+		</Unit>
+		<Unit filename="C:/Users/vince/Documents/double-pendulum/Pendulums.h">
+			<Option target="double_pendulum"/>
+		</Unit>
 		<Unit filename="C:/Users/vince/Documents/double-pendulum/main.cpp">
 			<Option target="double_pendulum"/>
 		</Unit>

@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/double_pendulum.dir/Pendulum.cpp.obj"
+  "CMakeFiles/double_pendulum.dir/Pendulums.cpp.obj"
   "CMakeFiles/double_pendulum.dir/main.cpp.obj"
   "double_pendulum.exe"
   "double_pendulum.exe.manifest"
