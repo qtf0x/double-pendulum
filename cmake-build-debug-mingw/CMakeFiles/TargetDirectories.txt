@@ -1,3 +1,0 @@
-C:/Users/vince/Documents/double-pendulum/cmake-build-debug-mingw/CMakeFiles/double_pendulum.dir
-C:/Users/vince/Documents/double-pendulum/cmake-build-debug-mingw/CMakeFiles/edit_cache.dir
-C:/Users/vince/Documents/double-pendulum/cmake-build-debug-mingw/CMakeFiles/rebuild_cache.dir
