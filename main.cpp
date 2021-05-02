@@ -13,6 +13,7 @@
 // TODO: Formatting + Documentation
 
 #include "Pendulums.h"
+#include "inipp-1.0.12/inipp/inipp.h"
 
 #include <fstream>
 #include <iostream>
@@ -24,6 +25,15 @@ const int WIDTH = 1920;
 const int HEIGHT = 1080;
 
 int main() {
+    // Config file processing
+    ifstream configFileIn( "config.ini" );
+    if ( configFileIn.fail() ) {
+        cerr << "Error opening config file . . ." << endl
+             << "Exiting" << endl;
+    }
+
+
+
     // anti-aliasing to smooth out jagged edges
     ContextSettings settings;
     settings.antialiasingLevel = 16;
@@ -39,7 +49,7 @@ int main() {
     window.setVerticalSyncEnabled( true );
     window.setFramerateLimit( 117 );
 
-    Pendulums doublePendulum( WIDTH, HEIGHT, Color::Cyan, 3, 960, 540, (M_PI), 250, 20, (M_PI_2), 250, 20 );
+    Pendulums doublePendulum( WIDTH, HEIGHT, Color::Cyan, 960, 540, (M_PI_2 - 0.12), 250, 20, (M_PI_2 + 2.7), 250, 20 );
 
     // while window is open, keep it open
     // this is the draw loop

@@ -13,7 +13,7 @@
 const double Pendulums::G = 0.5;
 
 Pendulums::Pendulums() {
-    // FIXME
+    // FIXME: Implement default constructor
 }
 
 Pendulums::Pendulums( const int windowWidth, const int windowHeight,

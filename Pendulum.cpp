@@ -9,7 +9,7 @@
 #include "Pendulum.h"
 
 Pendulum::Pendulum() {
-    // FIXME
+    // FIXME: Implement default constructor
 }
 
 Pendulum::Pendulum( const double angleRads, const double armLen,
