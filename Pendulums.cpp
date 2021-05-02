@@ -16,7 +16,37 @@ Pendulums::Pendulums() {
     // FIXME
 }
 
-Pendulums::Pendulums( const double xStart1, const double yStart1,
+Pendulums::Pendulums( const int windowWidth, const int windowHeight,
+                      const Color traceColor, const double xStart1,
+                      const double yStart1, const double angle1,
+                      const double armLen1, const double bobMass1,
+                      const double angle2, const double armLen2,
+                      const double bobMass2 ) {
+    _pend1 = Pendulum( angle1, armLen1, bobMass1 );
+    _pend2 = Pendulum( angle2, armLen2, bobMass2 );
+    _xStart1 = xStart1;
+    _yStart1 = yStart1;
+    updateEverything();
+
+    // Set up tracing of bob 2
+    _canvas.create( windowWidth, windowHeight );
+    _canvas.clear( Color::Black );
+
+    _canvasSprite.setTexture( _canvas.getTexture(), true );
+
+    _traceLine.setPrimitiveType( Lines );
+    _traceLine.resize( 2 );
+    _traceLine[0].color = traceColor;
+    _traceLine[1].color = traceColor;
+
+    _lastPos = this->getpend2XandY();
+
+    _lineTracing = true;
+}
+
+Pendulums::Pendulums( const int windowWidth, const int windowHeight,
+                      const Color traceColor, const double traceRadius,
+                      const double xStart1, const double yStart1,
                       const double angle1, const double armLen1,
                       const double bobMass1, const double angle2,
                       const double armLen2, const double bobMass2 ) {
@@ -25,6 +55,21 @@ Pendulums::Pendulums( const double xStart1, const double yStart1,
     _xStart1 = xStart1;
     _yStart1 = yStart1;
     updateEverything();
+
+    // Set up tracing of bob 2
+    _canvas.create( windowWidth, windowHeight );
+    _canvas.clear( Color::Black );
+
+    _canvasSprite.setTexture( _canvas.getTexture(), true );
+
+    _traceCircle.setRadius( traceRadius );
+    _traceCircle.setPointCount( 100 );
+    _traceCircle.setOrigin( traceRadius, traceRadius );
+    _traceCircle.setFillColor( traceColor );
+
+    _lastPos = this->getpend2XandY();
+
+    _lineTracing = false;
 }
 
 Pendulum Pendulums::getpend1() const {
@@ -33,6 +78,10 @@ Pendulum Pendulums::getpend1() const {
 
 Pendulum Pendulums::getpend2() const {
     return _pend2;
+}
+
+Vector2f Pendulums::getpend2XandY() const {
+    return Vector2f( _pend2.getxPos(), _pend2.getyPos() );
 }
 
 void Pendulums::updateEverything() {
@@ -62,4 +111,24 @@ void Pendulums::updateEverything() {
 
     _pend1.updateValues();
     _pend2.updateValues();
+
+    // Tracing
+    if ( _lineTracing ) {
+        _traceLine[0].position = _lastPos;
+        _traceLine[1].position = this->getpend2XandY();
+        _canvas.draw( _traceLine );
+    } else {
+        _traceCircle.setPosition( this->getpend2XandY() );
+        _canvas.draw( _traceCircle );
+    }
+    _canvas.display();
+    _lastPos = this->getpend2XandY();
+}
+
+void Pendulums::drawEverything( RenderWindow& window ) const {
+    window.draw( _canvasSprite );
+    window.draw( _pend1.getarm() );
+    window.draw( _pend1.getbob() );
+    window.draw( _pend2.getarm() );
+    window.draw( _pend2.getbob() );
 }

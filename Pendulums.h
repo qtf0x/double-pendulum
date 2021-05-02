@@ -16,7 +16,15 @@ public:
     // Constructors
 
     Pendulums();
-    Pendulums( const double xStart1, const double yStart1,
+    Pendulums( const int windowWidth, const int windowHeight,
+               const Color traceColor, const double xStart1,
+               const double yStart1, const double angle1,
+               const double armLen1, const double bobMass1,
+               const double angle2, const double armLen2,
+               const double bobMass2 );
+    Pendulums( const int windowWidth, const int windowHeight,
+               const Color traceColor, const double traceRadius,
+               const double xStart1, const double yStart1,
                const double angle1, const double armLen1,
                const double bobMass1, const double angle2,
                const double armLen2, const double bobMass2 );
@@ -25,10 +33,12 @@ public:
 
     Pendulum getpend1() const;
     Pendulum getpend2() const;
+    Vector2f getpend2XandY() const;
 
     // Helper functions
 
     void updateEverything();
+    void drawEverything( RenderWindow& window ) const;
 
 private:
     static const double G;
@@ -38,6 +48,12 @@ private:
     double _yStart1;
     double _xStart2;
     double _yStart2;
+    RenderTexture _canvas;
+    Sprite _canvasSprite;
+    CircleShape _traceCircle;
+    VertexArray _traceLine;
+    Vector2f _lastPos;
+    bool _lineTracing;
 };
 
 #endif //DOUBLE_PENDULUM_PENDULUMS_H

@@ -8,9 +8,6 @@
 
 #include "Pendulums.h"
 
-#include <SFML/Graphics.hpp>
-using namespace sf;
-
 #include <fstream>
 #include <iostream>
 using namespace std;
@@ -33,20 +30,17 @@ int main() {
                          "Double Pendulum Simulation", Style::Default,
                          settings );
 
+    window.setVerticalSyncEnabled( true );
     window.setFramerateLimit( 117 );
 
-
-    Pendulums doublePendulum( 960, 20, (M_PI_2), 200, 15, (M_PI_2), 450, 25 );
+    Pendulums doublePendulum( WIDTH, HEIGHT, Color::Green, 3, 960, 540, (M_PI), 250, 20, (M_PI + 1), 250, 20 );
 
     // while window is open, keep it open
     // this is the draw loop
     while ( window.isOpen() ) {
         window.clear( Color::Black );             // clear contents of old frame
 
-        window.draw( doublePendulum.getpend1().getarm() );
-        window.draw( doublePendulum.getpend1().getbob() );
-        window.draw( doublePendulum.getpend2().getarm() );
-        window.draw( doublePendulum.getpend2().getbob() );
+        doublePendulum.drawEverything( window );
 
         window.display();
 

@@ -23,6 +23,7 @@ Pendulum::Pendulum( const double angleRads, const double armLen,
     _bob.setPointCount( 100 );
     _bob.setRadius( _bobMass );
     _bob.setFillColor( Color::White );
+    _bob.setOrigin( _bobMass, _bobMass );
 
     _arm = VertexArray( Lines, 2 );
     _arm[0].color = Color::White;

@@ -10,13 +10,17 @@ C:/Users/vince/Documents/double-pendulum/Pendulum.h
 SFML/Graphics.hpp
 -
 
-C:/Users/vince/Documents/double-pendulum/Pendulums.cpp
-Pendulums.h
-C:/Users/vince/Documents/double-pendulum/Pendulums.h
-cmath
--
-
 C:/Users/vince/Documents/double-pendulum/Pendulums.h
 Pendulum.h
 C:/Users/vince/Documents/double-pendulum/Pendulum.h
+
+C:/Users/vince/Documents/double-pendulum/main.cpp
+Pendulums.h
+C:/Users/vince/Documents/double-pendulum/Pendulums.h
+fstream
+-
+iostream
+-
+cmath
+-
 
