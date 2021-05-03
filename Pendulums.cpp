@@ -28,7 +28,10 @@ Pendulums::Pendulums( const unsigned int windowWidth, const unsigned int windowH
     _yStart1 = yStart1;
 
     // Set up tracing of bob 2
-    _canvas.create( windowWidth, windowHeight );
+    ContextSettings settings;
+    settings.antialiasingLevel = 16;
+    settings.sRgbCapable = true;
+    _canvas.create( windowWidth, windowHeight, settings );
     _canvas.clear( Color::Black );
 
     _canvasSprite.setTexture( _canvas.getTexture(), true );
@@ -60,6 +63,10 @@ Pendulum Pendulums::getpend1() const {
 
 Pendulum Pendulums::getpend2() const {
     return _pend2;
+}
+
+RenderTexture& Pendulums::getcanvas() {
+    return _canvas;
 }
 
 Vector2f Pendulums::getpend2XandY() const {

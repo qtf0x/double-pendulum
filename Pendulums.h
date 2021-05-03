@@ -27,6 +27,7 @@ public:
 
     Pendulum getpend1() const;
     Pendulum getpend2() const;
+    RenderTexture& getcanvas();
     Vector2f getpend2XandY() const;
 
     // Helper functions

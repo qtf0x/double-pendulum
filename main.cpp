@@ -6,12 +6,12 @@
  *  pendulum) written in C++ using the SFML multimedia library.
  */
 
-// TODO: Image processing
-// TODO: User interaction (console or config file)
 // TODO: Default constructors
 // TODO: Dynamic window resizing
 // TODO: Formatting + Documentation
-// TODO: Make G constructor parameter
+// TODO: Make G configurable
+// TODO: Make antialiasing level configurable
+// TODO: Color cycling
 
 #include "Pendulums.h"
 #include "inipp-develop/inipp/inipp.h"
@@ -22,7 +22,7 @@ using namespace inipp;
 #include <string>
 using namespace std;
 
-#include <cmath>
+#include <ctime>
 
 int main() {
     unsigned int WIDTH = 1920;
@@ -87,7 +87,7 @@ int main() {
 
     configFileIn.close();
 
-    if ( WIDTH < 0 || HEIGHT < 0 || armLen1 < 0 || bobMass1 < 0 || armLen2 < 0 || bobMass2 < 0 || traceRadius < 0 ) {
+    if ( armLen1 < 0 || bobMass1 < 0 || armLen2 < 0 || bobMass2 < 0 || traceRadius < 0 ) {
         cerr << "Oops, there was a configuration error!" << endl
              << "You probably left an entire section blank in the config file . . ." << endl
              << "Please don't do that." << endl
@@ -111,6 +111,9 @@ int main() {
 
     Pendulums doublePendulum( WIDTH, HEIGHT, lineTracing, traceColor, traceRadius, startPosX, startPosY, startAng1, armLen1, bobMass1, startAng2, armLen2, bobMass2 );
 
+    // Frame counter
+    unsigned int frameCount = 0;
+
     // while window is open, keep it open
     // this is the draw loop
     while ( window.isOpen() ) {
@@ -128,7 +131,13 @@ int main() {
             if ( event.type == Event::Closed ) {  // if event is Closed type,
                 window.close();                   // then close the window
             }
+            if ( event.type == Event::KeyReleased ) {
+                string imgOutFilename = "output/frame_" + to_string( frameCount ) + '_' + to_string( time( nullptr ) ) + ".png";
+                doublePendulum.getcanvas().getTexture().copyToImage().saveToFile( imgOutFilename );
+            }
         }
+
+        ++frameCount;
     }
 
     return EXIT_SUCCESS;
