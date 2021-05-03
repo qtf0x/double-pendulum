@@ -25,7 +25,7 @@ int main() {
     unsigned int WIDTH = 1920;
     unsigned int HEIGHT = 1080;
 
-    // Config file processing
+    // Config File Processing
     Ini<char> config;
 
     string configInFilename = "config.ini";
@@ -54,6 +54,14 @@ int main() {
     if ( pointCount < 3 ) {
         pointCount = 3;
     }
+
+    // VSync
+    bool vSync = 0;
+    get_value( config.sections["Rendering"], "VSync", vSync );
+
+    // Framerate Limit
+    unsigned int framerateLimit = 0;
+    get_value( config.sections["Rendering"], "FramerateLimit", framerateLimit );
 
     // Gravity
     double G;
@@ -117,8 +125,8 @@ int main() {
                          "Double Pendulum Simulation", Style::Default,
                          settings );
 
-    window.setVerticalSyncEnabled( true );
-    window.setFramerateLimit( 117 );
+    window.setVerticalSyncEnabled( vSync );
+    window.setFramerateLimit( framerateLimit );
 
     Pendulums doublePendulum( WIDTH, HEIGHT, lineTracing, traceColor, traceRadius, startPosX, startPosY, startAng1, armLen1, bobMass1, startAng2, armLen2, bobMass2, G, antiAliasing, pointCount );
 
