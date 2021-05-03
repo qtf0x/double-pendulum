@@ -1,1 +1,1 @@
-# Double Pendulum "Simulation"
+# Double Pendulum Simulation
