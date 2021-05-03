@@ -1,26 +1,43 @@
 /* CSCI 261 Final Project - Double Pendulum
  *
- * Author: Vincent Marias
- *
  *  Simulation of a simple double pendulum (NOT a Harmonograph / Blackburn
  *  pendulum) written in C++ using the SFML multimedia library.
+ *
+ *  MIT License
+ *  Copyright (c) 2021 Vincent Marias
  */
 
 #include "Pendulum.h"
 
+#include <cmath>
+
 Pendulum::Pendulum() {
-    // FIXME: Implement default constructor
+    _angleRads = M_PI_2;
+    _armLen = 250;
+    _bobMass = 20;
+
+    _angVel = 0.0;
+
+    _bob.setPointCount( 100 );
+    _bob.setRadius( _bobMass );
+    _bob.setFillColor( Color::White );
+    _bob.setOrigin( _bobMass, _bobMass );
+
+    _arm.setPrimitiveType( Lines );
+    _arm.resize( 2 );
+    _arm[0].color = Color::White;
+    _arm[1].color = Color::White;
 }
 
 Pendulum::Pendulum( const double angleRads, const double armLen,
-                    const double bobMass ) {
+                    const double bobMass, const unsigned int pointCount ) {
     _angleRads = angleRads;
     _armLen = armLen;
     _bobMass = bobMass;
 
     _angVel = 0.0;
 
-    _bob.setPointCount( 100 );
+    _bob.setPointCount( pointCount );
     _bob.setRadius( _bobMass );
     _bob.setFillColor( Color::White );
     _bob.setOrigin( _bobMass, _bobMass );

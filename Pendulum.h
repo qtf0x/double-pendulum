@@ -1,9 +1,10 @@
 /* CSCI 261 Final Project - Double Pendulum
  *
- * Author: Vincent Marias
- *
  *  Simulation of a simple double pendulum (NOT a Harmonograph / Blackburn
  *  pendulum) written in C++ using the SFML multimedia library.
+ *
+ *  MIT License
+ *  Copyright (c) 2021 Vincent Marias
  */
 
 #ifndef DOUBLE_PENDULUM_PENDULUM_H
@@ -18,7 +19,7 @@ public:
 
     Pendulum();
     Pendulum( const double angleRads, const double armLen,
-              const double bobMass );
+              const double bobMass, const unsigned int pointCount );
 
     // Getters + Setters
 

@@ -1,19 +1,40 @@
 /* CSCI 261 Final Project - Double Pendulum
  *
- * Author: Vincent Marias
- *
  *  Simulation of a simple double pendulum (NOT a Harmonograph / Blackburn
  *  pendulum) written in C++ using the SFML multimedia library.
+ *
+ *  MIT License
+ *  Copyright (c) 2021 Vincent Marias
  */
 
 #include "Pendulums.h"
 
 #include <cmath>
 
-const double Pendulums::G = 0.5;
-
 Pendulums::Pendulums() {
-    // FIXME: Implement default constructor
+    G = 0.5;
+
+    _pend1 = Pendulum();
+    _pend2 = Pendulum();
+    _xStart1 = 960;
+    _yStart1 = 540;
+
+    // Set up tracing of bob 2
+    ContextSettings settings;
+    settings.antialiasingLevel = 16;
+    _canvas.create( 1920, 1080, settings );
+    _canvas.clear( Color::Black );
+
+    _canvasSprite.setTexture( _canvas.getTexture(), true );
+
+    updateXandY();
+
+    _traceCircle.setRadius( 3 );
+    _traceCircle.setPointCount( 100 );
+    _traceCircle.setOrigin( 3, 3 );
+    _traceCircle.setFillColor( Color::Cyan );
+
+    updateEverything();
 }
 
 Pendulums::Pendulums( const unsigned int windowWidth, const unsigned int windowHeight,
@@ -21,16 +42,18 @@ Pendulums::Pendulums( const unsigned int windowWidth, const unsigned int windowH
                       const double xStart1, const double yStart1,
                       const double angle1, const double armLen1,
                       const double bobMass1, const double angle2,
-                      const double armLen2, const double bobMass2 ) {
-    _pend1 = Pendulum( angle1, armLen1, bobMass1 );
-    _pend2 = Pendulum( angle2, armLen2, bobMass2 );
+                      const double armLen2, const double bobMass2, const double gravity,
+                      const unsigned int antiAliasing, const unsigned int pointCount ) {
+    G = gravity;
+
+    _pend1 = Pendulum( angle1, armLen1, bobMass1, pointCount );
+    _pend2 = Pendulum( angle2, armLen2, bobMass2, pointCount );
     _xStart1 = xStart1;
     _yStart1 = yStart1;
 
     // Set up tracing of bob 2
     ContextSettings settings;
-    settings.antialiasingLevel = 16;
-    settings.sRgbCapable = true;
+    settings.antialiasingLevel = antiAliasing;
     _canvas.create( windowWidth, windowHeight, settings );
     _canvas.clear( Color::Black );
 
@@ -49,7 +72,7 @@ Pendulums::Pendulums( const unsigned int windowWidth, const unsigned int windowH
         _lastPos = this->getpend2XandY();
     } else {
         _traceCircle.setRadius( traceRadius );
-        _traceCircle.setPointCount( 100 );
+        _traceCircle.setPointCount( pointCount );
         _traceCircle.setOrigin( traceRadius, traceRadius );
         _traceCircle.setFillColor( traceColor );
     }
@@ -70,7 +93,7 @@ RenderTexture& Pendulums::getcanvas() {
 }
 
 Vector2f Pendulums::getpend2XandY() const {
-    return Vector2f( _pend2.getxPos(), _pend2.getyPos() );
+    return Vector2f( _pend2.getxPos(), _pend2.getyPos());
 }
 
 void Pendulums::updateEverything() {
@@ -80,7 +103,7 @@ void Pendulums::updateEverything() {
     double a1( _pend1.getangleRads() ), a2( _pend2.getangleRads() );
     double v1( _pend1.getangVel() ), v2( _pend2.getangVel() );
 
-    angAcc1 = ( ( -G * ( 2 * m1 + m2 ) * sin( a1 ) ) - ( m2 * G * sin( a1 - 2 * a2 ) ) - ( 2 * sin( a1 - a2 ) * m2 * ( v2 * v2 * l2 + v1 * v1 * l1 * cos( a1 - a2 ) ) ) ) / ( l1 * ( 2 * m1 + m2 - m2 * cos( 2 * a1 - 2 * a2 ) ) );
+    angAcc1 = (( -G * ( 2 * m1 + m2 ) * sin( a1 ) ) - ( m2 * G * sin( a1 - 2 * a2 ) ) - ( 2 * sin( a1 - a2 ) * m2 * ( v2 * v2 * l2 + v1 * v1 * l1 * cos( a1 - a2 ) ) ) ) / ( l1 * ( 2 * m1 + m2 - m2 * cos( 2 * a1 - 2 * a2 ) ) );
     angAcc2 = ( 2 * sin( a1 - a2 ) * ( v1 * v1 * l1 * ( m1 + m2 ) + G * ( m1 + m2 ) * cos( a1 ) + v2 * v2 * l2 * m2 * cos( a1 - a2 ) ) ) / ( l2 * ( 2 * m1 + m2 - m2 * cos( 2 * a1 - 2 * a2 ) ) );
 
     _pend1.setangAcc( angAcc1 );

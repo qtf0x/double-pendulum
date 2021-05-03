@@ -1,16 +1,13 @@
 /* CSCI 261 Final Project - Double Pendulum
  *
- * Author: Vincent Marias
- *
  *  Simulation of a simple double pendulum (NOT a Harmonograph / Blackburn
  *  pendulum) written in C++ using the SFML multimedia library.
+ *
+ *  MIT License
+ *  Copyright (c) 2021 Vincent Marias
  */
 
-// TODO: Default constructors
-// TODO: Dynamic window resizing
 // TODO: Formatting + Documentation
-// TODO: Make G configurable
-// TODO: Make antialiasing level configurable
 // TODO: Color cycling
 
 #include "Pendulums.h"
@@ -44,6 +41,20 @@ int main() {
     config.default_section( config.sections["DEFAULT"]);
     config.interpolate();
 
+    // Anti-aliasing
+    unsigned int antiAliasing = 0;
+    get_value( config.sections["Rendering"], "AntiAliasing", antiAliasing );
+    if ( antiAliasing > 16 ) {
+        antiAliasing = 16;
+    }
+
+    // Circle point count
+    unsigned int pointCount = 0;
+    get_value( config.sections["Rendering"], "CirclePointCount", pointCount );
+    if ( pointCount < 3 ) {
+        pointCount = 3;
+    }
+
     // Gravity
     double G;
     get_value( config.sections["Simulation"], "GravitationalConstant", G );
@@ -59,15 +70,15 @@ int main() {
 
     // Initial conditions 1
     double startAng1, armLen1( -1 ), bobMass1( -1 );
-    get_value( config.sections["Initial Conditions Pendulum 1"], "StartAngle1", startAng1 );
-    get_value( config.sections["Initial Conditions Pendulum 1"], "ArmLength1", armLen1 );
-    get_value( config.sections["Initial Conditions Pendulum 1"], "BobMass1", bobMass1 );
+    get_value( config.sections["Initial Conditions Pendulum 1"], "StartAngle", startAng1 );
+    get_value( config.sections["Initial Conditions Pendulum 1"], "ArmLength", armLen1 );
+    get_value( config.sections["Initial Conditions Pendulum 1"], "BobMass", bobMass1 );
 
     // Initial conditions 2
     double startAng2, armLen2( -1 ), bobMass2( -1 );
-    get_value( config.sections["Initial Conditions Pendulum 2"], "StartAngle2", startAng2 );
-    get_value( config.sections["Initial Conditions Pendulum 2"], "ArmLength2", armLen2 );
-    get_value( config.sections["Initial Conditions Pendulum 2"], "BobMass2", bobMass2 );
+    get_value( config.sections["Initial Conditions Pendulum 2"], "StartAngle", startAng2 );
+    get_value( config.sections["Initial Conditions Pendulum 2"], "ArmLength", armLen2 );
+    get_value( config.sections["Initial Conditions Pendulum 2"], "BobMass", bobMass2 );
 
     // Tracing type
     bool lineTracing;
@@ -96,7 +107,7 @@ int main() {
 
     // anti-aliasing to smooth out jagged edges
     ContextSettings settings;
-    settings.antialiasingLevel = 16;
+    settings.antialiasingLevel = antiAliasing;
 
     // create a RenderWindow object
     // specify the size to be WIDTHxHEIGHT
@@ -109,7 +120,7 @@ int main() {
     window.setVerticalSyncEnabled( true );
     window.setFramerateLimit( 117 );
 
-    Pendulums doublePendulum( WIDTH, HEIGHT, lineTracing, traceColor, traceRadius, startPosX, startPosY, startAng1, armLen1, bobMass1, startAng2, armLen2, bobMass2 );
+    Pendulums doublePendulum( WIDTH, HEIGHT, lineTracing, traceColor, traceRadius, startPosX, startPosY, startAng1, armLen1, bobMass1, startAng2, armLen2, bobMass2, G, antiAliasing, pointCount );
 
     // Frame counter
     unsigned int frameCount = 0;
@@ -128,12 +139,22 @@ int main() {
         // Event Handling
         Event event;
         while ( window.pollEvent( event ) ) {  // aks if events occurred
-            if ( event.type == Event::Closed ) {  // if event is Closed type,
-                window.close();                   // then close the window
-            }
-            if ( event.type == Event::KeyReleased ) {
-                string imgOutFilename = "output/frame_" + to_string( frameCount ) + '_' + to_string( time( nullptr ) ) + ".png";
-                doublePendulum.getcanvas().getTexture().copyToImage().saveToFile( imgOutFilename );
+            switch ( event.type ) {
+                case Event::Closed:
+                    window.close();
+                    break;
+                case Event::KeyReleased:
+                    if ( event.key.code == Keyboard::Space ) {
+                        string imgOutFilename = "output/frame_" + to_string( frameCount ) + '_' + to_string( time( nullptr ) ) + ".png";
+                        doublePendulum.getcanvas().getTexture().copyToImage().saveToFile( imgOutFilename );
+                    }
+                    break;
+                case Event::Resized:
+                    View newView( window.getView() );
+                    const Vector2f newSize( window.getSize().x, window.getSize().y );
+                    newView.setSize( newSize );
+                    window.setView( newView );
+                    break;
             }
         }
 
