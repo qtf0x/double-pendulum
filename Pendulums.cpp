@@ -2,7 +2,7 @@
  *
  * Author: Vincent Marias
  *
- *  "Simulation" of a simple double pendulum (NOT a Harmonograph / Blackburn
+ *  Simulation of a simple double pendulum (NOT a Harmonograph / Blackburn
  *  pendulum) written in C++ using the SFML multimedia library.
  */
 
@@ -16,36 +16,8 @@ Pendulums::Pendulums() {
     // FIXME: Implement default constructor
 }
 
-Pendulums::Pendulums( const int windowWidth, const int windowHeight,
-                      const Color traceColor, const double xStart1,
-                      const double yStart1, const double angle1,
-                      const double armLen1, const double bobMass1,
-                      const double angle2, const double armLen2,
-                      const double bobMass2 ) {
-    _pend1 = Pendulum( angle1, armLen1, bobMass1 );
-    _pend2 = Pendulum( angle2, armLen2, bobMass2 );
-    _xStart1 = xStart1;
-    _yStart1 = yStart1;
-    updateEverything();
-
-    // Set up tracing of bob 2
-    _canvas.create( windowWidth, windowHeight );
-    _canvas.clear( Color::Black );
-
-    _canvasSprite.setTexture( _canvas.getTexture(), true );
-
-    _traceLine.setPrimitiveType( Lines );
-    _traceLine.resize( 2 );
-    _traceLine[0].color = traceColor;
-    _traceLine[1].color = traceColor;
-
-    _lastPos = this->getpend2XandY();
-
-    _lineTracing = true;
-}
-
-Pendulums::Pendulums( const int windowWidth, const int windowHeight,
-                      const Color traceColor, const double traceRadius,
+Pendulums::Pendulums( const unsigned int windowWidth, const unsigned int windowHeight,
+                      const bool lineTracing, const Color traceColor, const double traceRadius,
                       const double xStart1, const double yStart1,
                       const double angle1, const double armLen1,
                       const double bobMass1, const double angle2,
@@ -54,7 +26,6 @@ Pendulums::Pendulums( const int windowWidth, const int windowHeight,
     _pend2 = Pendulum( angle2, armLen2, bobMass2 );
     _xStart1 = xStart1;
     _yStart1 = yStart1;
-    updateEverything();
 
     // Set up tracing of bob 2
     _canvas.create( windowWidth, windowHeight );
@@ -62,14 +33,25 @@ Pendulums::Pendulums( const int windowWidth, const int windowHeight,
 
     _canvasSprite.setTexture( _canvas.getTexture(), true );
 
-    _traceCircle.setRadius( traceRadius );
-    _traceCircle.setPointCount( 100 );
-    _traceCircle.setOrigin( traceRadius, traceRadius );
-    _traceCircle.setFillColor( traceColor );
+    updateXandY();
 
-    _lastPos = this->getpend2XandY();
+    _lineTracing = lineTracing;
 
-    _lineTracing = false;
+    if ( _lineTracing ) {
+        _traceLine.setPrimitiveType( Lines );
+        _traceLine.resize( 2 );
+        _traceLine[0].color = traceColor;
+        _traceLine[1].color = traceColor;
+
+        _lastPos = this->getpend2XandY();
+    } else {
+        _traceCircle.setRadius( traceRadius );
+        _traceCircle.setPointCount( 100 );
+        _traceCircle.setOrigin( traceRadius, traceRadius );
+        _traceCircle.setFillColor( traceColor );
+    }
+
+    updateEverything();
 }
 
 Pendulum Pendulums::getpend1() const {
@@ -97,14 +79,7 @@ void Pendulums::updateEverything() {
     _pend1.setangAcc( angAcc1 );
     _pend2.setangAcc( angAcc2 );
 
-    _pend1.setxPos( _xStart1 + ( l1 * sin( a1 ) ) );
-    _pend1.setyPos( _yStart1 + ( l1 * cos( a1 ) ) );
-
-    _xStart2 = _pend1.getxPos();
-    _yStart2 = _pend1.getyPos();
-
-    _pend2.setxPos( _xStart2 + ( l2 * sin( a2 ) ) );
-    _pend2.setyPos( _yStart2 + ( l2 * cos( a2 ) ) );
+    updateXandY();
 
     _pend1.setarmPos( _xStart1, _yStart1 );
     _pend2.setarmPos( _xStart2, _yStart2 );
@@ -131,4 +106,18 @@ void Pendulums::drawEverything( RenderWindow& window ) const {
     window.draw( _pend1.getbob() );
     window.draw( _pend2.getarm() );
     window.draw( _pend2.getbob() );
+}
+
+void Pendulums::updateXandY() {
+    double l1( _pend1.getarmLen() ), l2( _pend2.getarmLen() );
+    double a1( _pend1.getangleRads() ), a2( _pend2.getangleRads() );
+
+    _pend1.setxPos( _xStart1 + ( l1 * sin( a1 ) ) );
+    _pend1.setyPos( _yStart1 + ( l1 * cos( a1 ) ) );
+
+    _xStart2 = _pend1.getxPos();
+    _yStart2 = _pend1.getyPos();
+
+    _pend2.setxPos( _xStart2 + ( l2 * sin( a2 ) ) );
+    _pend2.setyPos( _yStart2 + ( l2 * cos( a2 ) ) );
 }

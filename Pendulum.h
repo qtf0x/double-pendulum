@@ -2,7 +2,7 @@
  *
  * Author: Vincent Marias
  *
- *  "Simulation" of a simple double pendulum (NOT a Harmonograph / Blackburn
+ *  Simulation of a simple double pendulum (NOT a Harmonograph / Blackburn
  *  pendulum) written in C++ using the SFML multimedia library.
  */
 

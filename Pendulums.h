@@ -2,7 +2,7 @@
  *
  * Author: Vincent Marias
  *
- *  "Simulation" of a simple double pendulum (NOT a Harmonograph / Blackburn
+ *  Simulation of a simple double pendulum (NOT a Harmonograph / Blackburn
  *  pendulum) written in C++ using the SFML multimedia library.
  */
 
@@ -16,14 +16,8 @@ public:
     // Constructors
 
     Pendulums();
-    Pendulums( const int windowWidth, const int windowHeight,
-               const Color traceColor, const double xStart1,
-               const double yStart1, const double angle1,
-               const double armLen1, const double bobMass1,
-               const double angle2, const double armLen2,
-               const double bobMass2 );
-    Pendulums( const int windowWidth, const int windowHeight,
-               const Color traceColor, const double traceRadius,
+    Pendulums( const unsigned int windowWidth, const unsigned int windowHeight,
+               const bool lineTracing, const Color traceColor, const double traceRadius,
                const double xStart1, const double yStart1,
                const double angle1, const double armLen1,
                const double bobMass1, const double angle2,
@@ -54,6 +48,8 @@ private:
     VertexArray _traceLine;
     Vector2f _lastPos;
     bool _lineTracing;
+
+    void updateXandY();
 };
 
 #endif //DOUBLE_PENDULUM_PENDULUMS_H

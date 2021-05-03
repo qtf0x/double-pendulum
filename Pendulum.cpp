@@ -2,7 +2,7 @@
  *
  * Author: Vincent Marias
  *
- *  "Simulation" of a simple double pendulum (NOT a Harmonograph / Blackburn
+ *  Simulation of a simple double pendulum (NOT a Harmonograph / Blackburn
  *  pendulum) written in C++ using the SFML multimedia library.
  */
 
@@ -25,7 +25,8 @@ Pendulum::Pendulum( const double angleRads, const double armLen,
     _bob.setFillColor( Color::White );
     _bob.setOrigin( _bobMass, _bobMass );
 
-    _arm = VertexArray( Lines, 2 );
+    _arm.setPrimitiveType( Lines );
+    _arm.resize( 2 );
     _arm[0].color = Color::White;
     _arm[1].color = Color::White;
 }
