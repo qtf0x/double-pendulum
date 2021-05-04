@@ -53,7 +53,8 @@ int main() {
 
         // Anti-aliasing
         // if current line starts with "AntiAliasing, get value after '='
-        if ( nextValue.rfind( "AntiAliasing", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "AntiAliasing", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             antiAliasing = stoi( nextValue.substr( nextValue.find( '=' ) + 1,
                                                    string::npos ) );
 
@@ -66,7 +67,8 @@ int main() {
 
         // Circle Point Count
         // if current line starts with "CirclePointCount", get value after '='
-        if ( nextValue.rfind( "CirclePointCount", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "CirclePointCount", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             pointCount = stoi( nextValue.substr( nextValue.find( '=' ) + 1,
                                                  string::npos ) );
 
@@ -79,16 +81,18 @@ int main() {
 
         // VSync
         // if current line starts with "VSync", get value after '='
-        if ( nextValue.rfind( "VSync", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "VSync", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos )) {
             vSync = ( nextValue.substr( nextValue.find( '=' ) + 1,
                                         string::npos ) == "true" );
 
             continue;
         }
 
-        // Framrate Limit
+        // Framerate Limit
         // if current line starts with "FramerateLimit", get value after '='
-        if ( nextValue.rfind( "FramerateLimit", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "FramerateLimit", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             framerateLimit = stoi( nextValue.substr( nextValue.find( '=' ) + 1,
                                                      string::npos ) );
 
@@ -97,7 +101,8 @@ int main() {
 
         // Gravity
         // current line starts with "GravitationalConstant", get value after '='
-        if ( nextValue.rfind( "GravitationalConstant", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "GravitationalConstant", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             G = stod( nextValue.substr( nextValue.find( '=' ) + 1,
                                         string::npos ) );
 
@@ -106,7 +111,8 @@ int main() {
 
         // Window Size
         // if current line starts with "WindowWidth", get value after '='
-        if ( nextValue.rfind( "WindowWidth", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "WindowWidth", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             width = stoi( nextValue.substr( nextValue.find( '=' ) + 1,
                                             string::npos ) );
 
@@ -117,7 +123,8 @@ int main() {
             continue;
         }
         // if current line starts with "WindowHeight", get value after '='
-        if ( nextValue.rfind( "WindowHeight", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "WindowHeight", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             height = stoi( nextValue.substr( nextValue.find( '=' ) + 1,
                                              string::npos ) );
 
@@ -130,14 +137,16 @@ int main() {
 
         // Start Position
         // if current line starts with "StartPosX", get value after '='
-        if ( nextValue.rfind( "StartPosX", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "StartPosX", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             startPosX = stod( nextValue.substr( nextValue.find( '=' ) + 1,
                                                 string::npos ) );
 
             continue;
         }
         // if current line starts with "StartPosY", get value after '='
-        if ( nextValue.rfind( "StartPosY", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "StartPosY", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             startPosY = stod( nextValue.substr( nextValue.find( '=' ) + 1,
                                                 string::npos ) );
 
@@ -146,14 +155,16 @@ int main() {
 
         // Initial Conditions 1
         // if current line starts with "StartAngle1", get value after '='
-        if ( nextValue.rfind( "StartAngle1", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "StartAngle1", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             startAng1 = stod( nextValue.substr( nextValue.find( '=' ) + 1,
                                                 string::npos ) );
 
             continue;
         }
         // if current line starts with "ArmLength1", get value after '='
-        if ( nextValue.rfind( "ArmLength1", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "ArmLength1", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             armLen1 = stod( nextValue.substr( nextValue.find( '=' ) + 1,
                                               string::npos ) );
 
@@ -164,7 +175,8 @@ int main() {
             continue;
         }
         // if current line starts with "BobMass1", get value after '='
-        if ( nextValue.rfind( "BobMass1", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "BobMass1", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             bobMass1 = stod( nextValue.substr( nextValue.find( '=' ) + 1,
                                                string::npos ) );
 
@@ -177,14 +189,16 @@ int main() {
 
         // Initial Conditions 2
         // if current line starts with "StartAngle2", get value after '='
-        if ( nextValue.rfind( "StartAngle2", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "StartAngle2", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             startAng2 = stod( nextValue.substr( nextValue.find( '=' ) + 1,
                                                 string::npos ) );
 
             continue;
         }
         // if current line starts with "ArmLength2", get value after '='
-        if ( nextValue.rfind( "ArmLength2", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "ArmLength2", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             armLen2 = stod( nextValue.substr( nextValue.find( '=' ) + 1,
                                               string::npos ) );
 
@@ -195,7 +209,8 @@ int main() {
             continue;
         }
         // if current line starts with "BobMass2", get value after '='
-        if ( nextValue.rfind( "BobMass2", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "BobMass2", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             bobMass2 = stod( nextValue.substr( nextValue.find( '=' ) + 1,
                                                string::npos ) );
 
@@ -208,7 +223,8 @@ int main() {
 
         // Tracing Type
         // if current line starts with "LineTracing", get value after '='
-        if ( nextValue.rfind( "LineTracing", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "LineTracing", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             lineTracing = nextValue.substr( nextValue.find( '=' ) + 1,
                                             string::npos ) == "true";
 
@@ -217,7 +233,8 @@ int main() {
 
         // Tracing Circle Radius
         // if current line starts with "TraceCircleRadius", get value after '='
-        if ( nextValue.rfind( "TraceCircleRadius", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "TraceCircleRadius", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             traceRadius = stod( nextValue.substr( nextValue.find( '=' ) + 1,
                                                   string::npos ) );
 
@@ -226,28 +243,32 @@ int main() {
 
         // Tracing Color
         // if current line starts with "TraceColorRed", get value after '='
-        if ( nextValue.rfind( "TraceColorRed", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "TraceColorRed", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             red = stoi( nextValue.substr( nextValue.find( '=' ) + 1,
                                           string::npos ) );
 
             continue;
         }
         // if current line starts with "TraceColorGreen", get value after '='
-        if ( nextValue.rfind( "TraceColorGreen", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "TraceColorGreen", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             green = stoi( nextValue.substr( nextValue.find( '=' ) + 1,
                                             string::npos ) );
 
             continue;
         }
         // if current line starts with "TraceColorBlue", get value after '='
-        if ( nextValue.rfind( "TraceColorBlue", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "TraceColorBlue", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             blue = stoi( nextValue.substr( nextValue.find( '=' ) + 1,
                                            string::npos ) );
 
             continue;
         }
         // if current line starts with "TraceColorAlpha", get value after '='
-        if ( nextValue.rfind( "TraceColorAlpha", 0 ) == 0 ) {
+        if ( ( nextValue.rfind( "TraceColorAlpha", 0 ) == 0 )
+             && ( nextValue.find( '=' ) != string::npos ) ) {
             alpha = stoi( nextValue.substr( nextValue.find( '=' ) + 1,
                                             string::npos ) );
 
