@@ -1,5 +1,5 @@
 # Double Pendulum Simulation
 
----
+***
 
-This is more text
+This is more text <vmarias@mymail.mines.edu>
