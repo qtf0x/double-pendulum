@@ -27,13 +27,13 @@ PROGRAM DOCUMENTATION
     To use this program, you need to build SFML on your own machine and include
 the paths to your own installation in the CMakeLists.txt file. Before you run
 the program, make sure to edit the config.ini file to set up the simulation to
-your liking. The file includes a description of the options available to you,
-and how to choose values for each of them. Then simply run the program and
-watch the simulation happen. At any time, if you like the look of the path
-traced by the pendulum, press the space bar and it will save that as an image
-file in the /output directory (the pendulum itself will not be included in the
-image). When you are done, just click the close button in the corner of the
-window.
+your liking (it's currently set up for my PC). The file includes a description
+of the options available to you, and how to choose values for each of them.
+Then simply run the program and watch the simulation happen. At any time, if
+you like the look of the path traced by the pendulum, press the space bar and
+it will save that as an image file in the /output directory (the pendulum
+itself will not be included in the image). When you are done, just click the
+close button in the corner of the window.
 
 Features wish-list:
 - Using proper .ini file parsing (would need to write my own parser, or include
@@ -43,6 +43,11 @@ would have to add a setTraceColor() function to Pendulums)
 - Real-time graphing of various values like velocity, acceleration, etc. (I
 think I would do this in a separate SFML RenderWindow, but I'm really not sure
 where to even begin with graphing)
+- Adding an option for air resistance to make the simulation more realistic
+(right now, there are no external forces acting on the pendulum, so I'm pretty
+sure it will never stop moving)
+- Making the simulation interactive (you could click and drag the masses around
+and see what happens in real-time)
 
 TESTS
 

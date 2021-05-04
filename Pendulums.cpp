@@ -19,6 +19,8 @@ Pendulums::Pendulums() {
     _xStart1 = 960;                             // default pin x-position
     _yStart1 = 540;                             // default pin y-position
 
+    updateXandY();                              // set initial x- and y-position
+
     // Canvas setup
     ContextSettings settings;
     settings.antialiasingLevel = 16;            // set anti-aliasing for canvas
@@ -33,7 +35,6 @@ Pendulums::Pendulums() {
     _traceCircle.setOrigin( 3, 3 );             // origin = center, not corner
     _traceCircle.setFillColor( Color::Cyan );   // default tracing color
 
-    updateXandY();                              // set initial x- and y-position
     updateEverything();                         // do math and update values
 }
 
@@ -54,6 +55,8 @@ Pendulums::Pendulums( const unsigned int windowWidth,
     _xStart1 = xStart1;                         // set pin x-position
     _yStart1 = yStart1;                         // set pin y-position
 
+    updateXandY();                              // set initial x- and y-position
+
     // Canvas setup
     ContextSettings settings;
     settings.antialiasingLevel = antiAliasing;  // set anti-aliasing for canvas
@@ -72,7 +75,7 @@ Pendulums::Pendulums( const unsigned int windowWidth,
         _traceLine[0].color = traceColor;       // set line to trace color
         _traceLine[1].color = traceColor;
 
-        _lastPos = this->getpend2XandY();
+        _lastPos = getpend2XandY();
     } else {                                    // Circle tracing
         _traceCircle.setRadius( traceRadius );  // set circles radius
         // set circle point count
@@ -83,7 +86,6 @@ Pendulums::Pendulums( const unsigned int windowWidth,
         _traceCircle.setFillColor( traceColor );
     }
 
-    updateXandY();                              // set initial x- and y-position
     updateEverything();                         // do math and update values
 }
 
