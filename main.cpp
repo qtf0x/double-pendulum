@@ -8,18 +8,16 @@
  */
 
 #include "Pendulums.h"
-#include "inipp-develop/inipp/inipp.h"                 // include inipp library
-using namespace inipp;
 
 #include <fstream>                                     // for ifstream
 #include <iostream>                                    // for cerr
 #include <string>                                      // for string library
 using namespace std;
 
+#include <cmath>                                       // for M_PI_2
 #include <ctime>                                       // for time()
 
 int main() {
-    unsigned int width(1920), height(1080);            // window dim. default
 
     //**********************************
     // CONFIG FILE PROCESSING BELOW HERE
@@ -33,107 +31,234 @@ int main() {
         return EXIT_FAILURE;
     }
 
+    unsigned int antiAliasing( 16 ), pointCount( 100 );
+    bool vSync = true;
+    unsigned int framerateLimit = 60;
+    double G = 1;
+    unsigned int width( 1920 ), height( 1080 );
+    double startPosX( 960.0 ), startPosY( 540.0 );
+    double startAng1( M_PI_2 ), armLen1( 250 ), bobMass1( 20 );
+    double startAng2( M_PI_2 ), armLen2( 250 ), bobMass2( 20 );
+    bool lineTracing = false;
+    double traceRadius = 4.0;
+    int red( 255 ), green( 0 ), blue( 255 ), alpha( 255 );
+    string nextValue;
 
-    Ini<char> config;                                  // inipp .ini parser
-    config.parse( configFileIn );                      // parse config file
-    // parse default section
-    config.default_section( config.sections["DEFAULT"] );
-    // I don't know what this does, but it makes inipp work
-    config.interpolate();
+    while( getline( configFileIn, nextValue ) ) {
 
-    // Anti-aliasing
-    unsigned int antiAliasing = 0;
-    // get value from appropriate section in config.ini
-    get_value( config.sections["Rendering"], "AntiAliasing", antiAliasing );
-    if ( antiAliasing > 16 ) {
-        antiAliasing = 16;                             // >16 breaks everything
+        if ( nextValue.rfind( ';', 0 ) == 0 || nextValue.rfind( '[', 0 ) == 0 )
+        {
+            continue;                                  // skip comments/headers
+        }
+
+        // Anti-aliasing
+        // if current line starts with "AntiAliasing, get value after '='
+        if ( nextValue.rfind( "AntiAliasing", 0 ) == 0 ) {
+            antiAliasing = stoi( nextValue.substr( nextValue.find( '=' ) + 1,
+                                                   string::npos ) );
+
+            if ( antiAliasing > 16 ) {
+                antiAliasing = 16;                     // >16 breaks everything
+            }
+
+            continue;
+        }
+
+        // Circle Point Count
+        // if current line starts with "CirclePointCount", get value after '='
+        if ( nextValue.rfind( "CirclePointCount", 0 ) == 0 ) {
+            pointCount = stoi( nextValue.substr( nextValue.find( '=' ) + 1,
+                                                 string::npos ) );
+
+            if ( pointCount < 3 ) {
+                pointCount = 3;                        // <3 breaks everything
+            }
+
+            continue;
+        }
+
+        // VSync
+        // if current line starts with "VSync", get value after '='
+        if ( nextValue.rfind( "VSync", 0 ) == 0 ) {
+            vSync = ( nextValue.substr( nextValue.find( '=' ) + 1,
+                                        string::npos ) == "true" );
+
+            continue;
+        }
+
+        // Framrate Limit
+        // if current line starts with "FramerateLimit", get value after '='
+        if ( nextValue.rfind( "FramerateLimit", 0 ) == 0 ) {
+            framerateLimit = stoi( nextValue.substr( nextValue.find( '=' ) + 1,
+                                                     string::npos ) );
+
+            continue;
+        }
+
+        // Gravity
+        // current line starts with "GravitationalConstant", get value after '='
+        if ( nextValue.rfind( "GravitationalConstant", 0 ) == 0 ) {
+            G = stod( nextValue.substr( nextValue.find( '=' ) + 1,
+                                        string::npos ) );
+
+            continue;
+        }
+
+        // Window Size
+        // if current line starts with "WindowWidth", get value after '='
+        if ( nextValue.rfind( "WindowWidth", 0 ) == 0 ) {
+            width = stoi( nextValue.substr( nextValue.find( '=' ) + 1,
+                                            string::npos ) );
+
+            if ( width < 1 ) {
+                width = 1920;
+            }
+
+            continue;
+        }
+        // if current line starts with "WindowHeight", get value after '='
+        if ( nextValue.rfind( "WindowHeight", 0 ) == 0 ) {
+            height = stoi( nextValue.substr( nextValue.find( '=' ) + 1,
+                                             string::npos ) );
+
+            if ( height < 1 ) {
+                height = 1080;
+            }
+
+            continue;
+        }
+
+        // Start Position
+        // if current line starts with "StartPosX", get value after '='
+        if ( nextValue.rfind( "StartPosX", 0 ) == 0 ) {
+            startPosX = stod( nextValue.substr( nextValue.find( '=' ) + 1,
+                                                string::npos ) );
+
+            continue;
+        }
+        // if current line starts with "StartPosY", get value after '='
+        if ( nextValue.rfind( "StartPosY", 0 ) == 0 ) {
+            startPosY = stod( nextValue.substr( nextValue.find( '=' ) + 1,
+                                                string::npos ) );
+
+            continue;
+        }
+
+        // Initial Conditions 1
+        // if current line starts with "StartAngle1", get value after '='
+        if ( nextValue.rfind( "StartAngle1", 0 ) == 0 ) {
+            startAng1 = stod( nextValue.substr( nextValue.find( '=' ) + 1,
+                                                string::npos ) );
+
+            continue;
+        }
+        // if current line starts with "ArmLength1", get value after '='
+        if ( nextValue.rfind( "ArmLength1", 0 ) == 0 ) {
+            armLen1 = stod( nextValue.substr( nextValue.find( '=' ) + 1,
+                                              string::npos ) );
+
+            if ( armLen1 < 0 ) {
+                armLen1 *= -1.0;
+            }
+
+            continue;
+        }
+        // if current line starts with "BobMass1", get value after '='
+        if ( nextValue.rfind( "BobMass1", 0 ) == 0 ) {
+            bobMass1 = stod( nextValue.substr( nextValue.find( '=' ) + 1,
+                                               string::npos ) );
+
+            if ( bobMass1 < 0 ) {
+                bobMass1 *= -1.0;
+            }
+
+            continue;
+        }
+
+        // Initial Conditions 2
+        // if current line starts with "StartAngle2", get value after '='
+        if ( nextValue.rfind( "StartAngle2", 0 ) == 0 ) {
+            startAng2 = stod( nextValue.substr( nextValue.find( '=' ) + 1,
+                                                string::npos ) );
+
+            continue;
+        }
+        // if current line starts with "ArmLength2", get value after '='
+        if ( nextValue.rfind( "ArmLength2", 0 ) == 0 ) {
+            armLen2 = stod( nextValue.substr( nextValue.find( '=' ) + 1,
+                                              string::npos ) );
+
+            if ( armLen2 < 0 ) {
+                armLen2 *= -1.0;
+            }
+
+            continue;
+        }
+        // if current line starts with "BobMass2", get value after '='
+        if ( nextValue.rfind( "BobMass2", 0 ) == 0 ) {
+            bobMass2 = stod( nextValue.substr( nextValue.find( '=' ) + 1,
+                                               string::npos ) );
+
+            if ( bobMass2 < 0 ) {
+                bobMass2 *= -1.0;
+            }
+
+            continue;
+        }
+
+        // Tracing Type
+        // if current line starts with "LineTracing", get value after '='
+        if ( nextValue.rfind( "LineTracing", 0 ) == 0 ) {
+            lineTracing = nextValue.substr( nextValue.find( '=' ) + 1,
+                                            string::npos ) == "true";
+
+            continue;
+        }
+
+        // Tracing Circle Radius
+        // if current line starts with "TraceCircleRadius", get value after '='
+        if ( nextValue.rfind( "TraceCircleRadius", 0 ) == 0 ) {
+            traceRadius = stod( nextValue.substr( nextValue.find( '=' ) + 1,
+                                                  string::npos ) );
+
+            continue;
+        }
+
+        // Tracing Color
+        // if current line starts with "TraceColorRed", get value after '='
+        if ( nextValue.rfind( "TraceColorRed", 0 ) == 0 ) {
+            red = stoi( nextValue.substr( nextValue.find( '=' ) + 1,
+                                          string::npos ) );
+
+            continue;
+        }
+        // if current line starts with "TraceColorGreen", get value after '='
+        if ( nextValue.rfind( "TraceColorGreen", 0 ) == 0 ) {
+            green = stoi( nextValue.substr( nextValue.find( '=' ) + 1,
+                                            string::npos ) );
+
+            continue;
+        }
+        // if current line starts with "TraceColorBlue", get value after '='
+        if ( nextValue.rfind( "TraceColorBlue", 0 ) == 0 ) {
+            blue = stoi( nextValue.substr( nextValue.find( '=' ) + 1,
+                                           string::npos ) );
+
+            continue;
+        }
+        // if current line starts with "TraceColorAlpha", get value after '='
+        if ( nextValue.rfind( "TraceColorAlpha", 0 ) == 0 ) {
+            alpha = stoi( nextValue.substr( nextValue.find( '=' ) + 1,
+                                            string::npos ) );
+
+            continue;
+        }
+
     }
 
-    // Circle point count
-    unsigned int pointCount = 0;
-    // get value from appropriate section in config.ini
-    get_value( config.sections["Rendering"], "CirclePointCount", pointCount );
-    if ( pointCount < 3 ) {
-        pointCount = 3;                                // <3 breaks everything
-    }
-
-    // VSync
-    bool vSync = 0;
-    // get value from appropriate section in config.ini
-    get_value( config.sections["Rendering"], "VSync", vSync );
-
-    // Framerate Limit
-    unsigned int framerateLimit = 0;
-    // get value from appropriate section in config.ini
-    get_value( config.sections["Rendering"], "FramerateLimit", framerateLimit );
-
-    // Gravity
-    double G;
-    // get value from appropriate section in config.ini
-    get_value( config.sections["Simulation"], "GravitationalConstant", G );
-
-    // Window size
-    // get values from appropriate section in config.ini
-    get_value( config.sections["Size and Position"], "WindowWidth", width );
-    get_value( config.sections["Size and Position"], "WindowHeight", height );
-
-    // Start position
-    double startPosX, startPosY;
-    // get values from appropriate section in config.ini
-    get_value( config.sections["Size and Position"], "StartPosX", startPosX );
-    get_value( config.sections["Size and Position"], "StartPosY", startPosY );
-
-    // Initial conditions 1
-    double startAng1, armLen1( -1 ), bobMass1( -1 );
-    // get values from appropriate section in config.ini
-    get_value( config.sections["Initial Conditions Pendulum 1"], "StartAngle",
-               startAng1 );
-    get_value( config.sections["Initial Conditions Pendulum 1"], "ArmLength",
-               armLen1 );
-    get_value( config.sections["Initial Conditions Pendulum 1"], "BobMass",
-               bobMass1 );
-
-    // Initial conditions 2
-    double startAng2, armLen2( -1 ), bobMass2( -1 );
-    // get values from appropriate section in config.ini
-    get_value( config.sections["Initial Conditions Pendulum 2"], "StartAngle",
-               startAng2 );
-    get_value( config.sections["Initial Conditions Pendulum 2"], "ArmLength",
-               armLen2 );
-    get_value( config.sections["Initial Conditions Pendulum 2"], "BobMass",
-               bobMass2 );
-
-    // Tracing type
-    bool lineTracing;
-    // get value from appropriate section in config.ini
-    get_value( config.sections["Path Tracing"], "LineTracing", lineTracing );
-
-    // Tracing circle radius
-    double traceRadius = -1;
-    // get value from appropriate section in config.ini
-    get_value( config.sections["Path Tracing"], "TraceCircleRadius",
-               traceRadius );
-
-    // Tracing color
-    int red( -1 ), green( -1 ), blue( -1 ), alpha( -1 );
-    // get value from appropriate section in config.ini
-    get_value( config.sections["Path Tracing"], "TraceColorRed", red );
-    get_value( config.sections["Path Tracing"], "TraceColorGreen", green );
-    get_value( config.sections["Path Tracing"], "TraceColorBlue", blue );
-    get_value( config.sections["Path Tracing"], "TraceColorAlpha", alpha );
-    Color traceColor( red, green, blue, alpha );       // create color
+    Color traceColor( red, green, blue, alpha );       // create trace color
 
     configFileIn.close();                              // close config file
-
-    // when critical values are left default -1, indicates misuse of config file
-    // in reality, this is a limitation of the inipp library
-    if ( armLen1 < 0 || bobMass1 < 0 || armLen2 < 0 || bobMass2 < 0
-         || traceRadius < 0 ) {
-        cerr << "Oops, there was a configuration error!" << endl
-             << "You probably left an entire section blank in the config file."
-             << endl << "Please don't do that." << endl
-             << "Goodbye!";
-    }
 
     //**********************************
     // CONFIG FILE PROCESSING ABOVE HERE
