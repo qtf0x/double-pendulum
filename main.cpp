@@ -1,6 +1,6 @@
 /* CSCI 261 Final Project - Double Pendulum
  *
- *  Simulation of a simple double pendulum (NOT a Harmonograph / Blackburn
+ *  Simulation of a simple double pendulum (not a Harmonograph / Blackburn
  *  pendulum) written in C++ using the SFML multimedia library.
  *
  *  MIT License
@@ -19,14 +19,11 @@ using namespace std;
 #include <ctime>                                       // for time()
 
 int main() {
-    unsigned int width = 1920;                         // window width default
-    unsigned int height = 1080;                        // window height default
+    unsigned int width(1920), height(1080);            // window dim. default
 
     //**********************************
     // CONFIG FILE PROCESSING BELOW HERE
     //**********************************
-
-    Ini<char> config;                                  // inipp .ini parser
 
     string configInFilename = "config.ini";
     ifstream configFileIn( configInFilename );         // open config file
@@ -36,6 +33,8 @@ int main() {
         return EXIT_FAILURE;
     }
 
+
+    Ini<char> config;                                  // inipp .ini parser
     config.parse( configFileIn );                      // parse config file
     // parse default section
     config.default_section( config.sections["DEFAULT"] );

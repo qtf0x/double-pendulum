@@ -1,6 +1,6 @@
 /* CSCI 261 Final Project - Double Pendulum
  *
- *  Simulation of a simple double pendulum (NOT a Harmonograph / Blackburn
+ *  Simulation of a simple double pendulum (not a Harmonograph / Blackburn
  *  pendulum) written in C++ using the SFML multimedia library.
  *
  *  MIT License
@@ -106,7 +106,7 @@ void Pendulums::updateEverything() {
     double v1( _pend1.getangVel() ), v2( _pend2.getangVel() );
 
     // calculate angular accelerations of both pendulums based on current values
-    // AKA do gross physics mathemagics
+    // AKA do gross physics math / magic
     angAcc1 = ( ( -G * ( 2 * m1 + m2 ) * sin( a1 ) )
               - ( m2 * G * sin( a1 - 2 * a2 ) ) - ( 2 * sin( a1 - a2 ) * m2
               * ( v2 * v2 * l2 + v1 * v1 * l1 * cos( a1 - a2 ) ) ) )

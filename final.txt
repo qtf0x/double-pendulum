@@ -1,0 +1,94 @@
+* required project paper *
+
+TITLE
+
+Double Pendulum Simulation
+by Vincent Marias
+CSCI 261 Section C
+
+PROBLEM DESCRIPTION
+
+Simulation of a simple double pendulum, animated using the SFML multimedia
+library. The user defines various parameters related to the simulation via a
+configuration file. During the animation, the trajectory of the bottom pendulum
+is traced on-screen. The user can press the space key at any time, and the
+trajectory that has been traced up to that point will be saved as an image file.
+
+A double pendulum consists of a regular pendulum with another pendulum attached
+to the bob of the first. While a single pendulum is very predictable and easy
+to model with simple equations, a double pendulum is the complete opposite. A
+double pendulum’s trajectory is extremely difficult to predict given initial
+conditions, and even the most minute differences in initial conditions will
+result in wildly different trajectories. Because of this, a double pendulum is
+said to exhibit chaotic motion.
+
+PROGRAM DOCUMENTATION
+
+    To use this program, you need to build SFML on your own machine and include
+the paths to your own installation in the CMakeLists.txt file. Before you run
+the program, make sure to edit the config.ini file to set up the simulation to
+your liking. The file includes a description of the options available to you,
+and how to choose values for each of them. Then simply run the program and
+watch the simulation happen. At any time, if you like the look of the path
+traced by the pendulum, press the space bar and it will save that as an image
+file in the /output directory (the pendulum itself will not be included in the
+image). When you are done, just click the close button in the corner of the
+window.
+
+Features wish-list:
+- Using proper .ini file parsing (would need to write my own parser, or include
+an external library which isn't allowed for this project)
+- Dynamically changing the color of the tracing (could use keyboard input, but
+would have to add a setTraceColor() function to Pendulums)
+- Real-time graphing of various values like velocity, acceleration, etc. (I
+think I would do this in a separate SFML RenderWindow, but I'm really not sure
+where to even begin with graphing)
+
+TESTS
+
+1. Negative values of G are fine. Even though it doesn't make any physical
+sense, if G is negative, it just uses that because I think the result is cool.
+(Try it out!)
+2. Negative values of all other input parameters are handled smoothly. For
+example, negative values for the window dimensions will just result in a
+default of 1920x1080.
+3. Unrealistic input values for anti-aliasing and circle point counts are not
+able to be used. SFML allows for RenderTextures to use anti-aliasing above x16,
+but it turns out that (on my machine, at least) this will just break the
+program. So entered values above 16 are truncated to 16. SFML also allows you
+to attempt to construct circles out of <3 points, but again this just breaks
+everything. So entered values below 3 are truncated to 3. (I know that at some
+point it's not a circle anymore, especially with 3 points, but it can produce
+some cool-looking results so I left it as an option)
+4. Resizing the render window during runtime is dealt with dynamically. When
+the user resizes a RenderWindow normally, it would just stretch everything. My
+program dynamically resizes and moves everything being drawn so that resizing
+the window during runtime is a real option for the user.
+5. In the config.ini file, users can enter values in any order they want, or
+leave values out entirely if they want. Any value not found in the file will be
+set to a default. For example, if there is no user-defined option for a
+framerate limit, the program will just use 60 as this will be fine on most
+computers.
+
+REFLECTIONS
+
+    I learned a lot more from this project than I expected to. The most impactful
+lesson was about the importance of careful planning and design. Before I wrote
+any code, I should have sat down and written out exactly how I wanted
+everything to function and how different classes and functions would interface.
+Sort of like storyboarding a movie or something like that. I would have ended
+up with a much better-designed program that would also likely be more concise
+and make more sense to other people. Even with all the comments I left, I get
+the feeling my code is still confusing.
+    Another lesson was about time-management. This kind of goes along with
+planning, but if I had started work on this project just a few days earlier, I
+would have had time to implement most of the features I didn't get around to
+and would have ended up with a better program in the end. Of course, having
+more time would have also made the project less stressful over all.
+    Finally, I learned a lesson about reading the instructions carefully and
+completely before diving into a project like this. I missed the part that says
+we cannot use ANY external code other than what we've used in the class so far.
+Without having read that, I assumed that since we were already using the SFML
+library, I could use another external library in my program. I got about
+halfway through implementing my use of that library before realizing I probably
+wasn't allowed to do so.

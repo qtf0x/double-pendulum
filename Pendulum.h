@@ -1,6 +1,6 @@
 /* CSCI 261 Final Project - Double Pendulum
  *
- *  Simulation of a simple double pendulum (NOT a Harmonograph / Blackburn
+ *  Simulation of a simple double pendulum (not a Harmonograph / Blackburn
  *  pendulum) written in C++ using the SFML multimedia library.
  *
  *  MIT License
