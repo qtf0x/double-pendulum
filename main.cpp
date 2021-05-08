@@ -7,6 +7,13 @@
  *  Copyright (c) 2021 Vincent Marias
  */
 
+// TODO: Install Boost and switch to that for config file processing
+// TODO: Make line tracing color dynamic w/ user input
+// TODO: Graphs!
+// TODO: Add an option for air resistance
+// TODO: Make pendulums interactive w/ mouse (drag masses, pin around)
+// TODO: Add sliders for various values (mass, length, etc.)
+
 #include "Pendulums.h"
 #include "inipp-develop/inipp/inipp.h"                 // include inipp library
 using namespace inipp;
