@@ -7,7 +7,6 @@ pendulum) written in C++ using the SFML multimedia library.
   * Simulation behavior (speed, gravity)
   * Initial conditions of each pendulum
   * Tracing of pendulum trajectory (lines/circles, color, etc.)
-*
 ## Example
 ```c++
     Pendulums doublePendulum;
